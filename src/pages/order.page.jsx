@@ -1,0 +1,53 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getOrderById, getFileById } from '../services/api';
+import { toast } from 'react-toastify';
+import OrderCard from '../components/orderCard';
+
+function OrderPage() {
+
+  const { id } = useParams();
+  const [order, setOrder] = useState( '');
+  const [url, setUrl] = useState('');
+
+  const fetchOrder = async () => {
+    try {
+
+      // get order by id 
+      const response  = await getOrderById(id);
+      setOrder(response.data);
+
+      // get invoice-pdf by file-id 
+      const binarydata = await getFileById(id);
+   
+      // Create a Blob from the decoded binary data
+      const blob = new Blob([binarydata.data], { type: 'application/pdf' });
+
+      // Create a temporary URL for the Blob
+      setUrl(URL.createObjectURL(blob));
+      // setUrl(order.invoiceFileUrl)
+  
+    } catch (error) {
+      toast.error('Failed to fetch order details.');
+      console.error('Error fetching order:', error);
+    }
+  };
+ 
+  useEffect(() => {
+    fetchOrder();
+  }, [id]);
+
+  if (!order) {
+    return <div>Loading...</div>;
+  }
+ 
+  return (
+
+    <div className="container col-md-8 col-lg-8 mt-4 ">
+      <h3 className="p-2" >Order Details </h3>
+      <OrderCard order={order} url={url} />
+    </div>
+  );
+};
+
+export default OrderPage;
