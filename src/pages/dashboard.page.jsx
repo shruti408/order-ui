@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getOrders } from '../services/api';
-import OrderTable from '../components/OrderTable';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import OrderTable from '../components/orderTable';
 
 function Dashboard() {
   const [orders, setOrders] = useState([]);
