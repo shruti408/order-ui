@@ -12,6 +12,7 @@ function CreateOrderForm() {
 
   const navigate = useNavigate();
 
+  // sending order to server  
   const submitOrder = async (formData) => {
     try {
       const response = await createOrder(formData);
@@ -20,8 +21,8 @@ function CreateOrderForm() {
         navigate('/');
        }
     } catch (error) {
-      toast.error('Failed to fetch order details.');
-      console.error('Error fetching order:', error);
+      toast.error('Failed to create order.');
+      console.error('Error creating order:', error);
     }
   };
 
@@ -39,7 +40,7 @@ function CreateOrderForm() {
       return setInvoiceFileError("Invoice file is required")
     }
 
-    // formData api 
+    //using formData api 
     const formData = new FormData();
     formData.append('customerName', formInputs.customerName);
     formData.append('orderAmount', formInputs.orderAmount);

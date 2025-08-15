@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 function OrderTable({ orders }) {
+  
+  if(!orders){
+    return;
+  }
    
   return (
     <>
@@ -14,8 +18,7 @@ function OrderTable({ orders }) {
               <th scope="col">Invoice</th>
             </tr>
           </thead>
-
-
+ 
           <tbody>
             {orders.map((order, index) => (
               <tr key={index}>

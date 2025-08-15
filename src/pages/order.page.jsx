@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getOrderById, getFileById } from '../services/api';
 import { toast } from 'react-toastify';
@@ -17,7 +17,7 @@ function OrderPage() {
       const response  = await getOrderById(id);
       setOrder(response.data);
 
-      // get invoice-pdf by file-id 
+      // get invoice-file by file-id 
       const binarydata = await getFileById(id);
    
       // Create a Blob from the decoded binary data
@@ -25,11 +25,10 @@ function OrderPage() {
 
       // Create a temporary URL for the Blob
       setUrl(URL.createObjectURL(blob));
-      // setUrl(order.invoiceFileUrl)
-  
+   
     } catch (error) {
       toast.error('Failed to fetch order details.');
-      console.error('Error fetching order:', error);
+      console.error('Error fetching order details:', error);
     }
   };
  
