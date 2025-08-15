@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getOrders } from '../services/api';
-import OrderTable from '../components/OrderTable';
+import OrderTable from 'src/components/OrderTable';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
