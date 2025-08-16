@@ -55,6 +55,11 @@ function CreateOrderForm() {
   }
 
   function onChangeHandler(event) {
+    
+    if (event.target.name === 'invoiceFile' ) {
+       setFormInputs({ ...formInputs, [event.target.name]: event.target.files[0] });
+      setInvoiceFileError('')
+    }else{ 
     setFormInputs({
       ...formInputs, [event.target.name]: event.target.value
     })
@@ -64,16 +69,9 @@ function CreateOrderForm() {
      if (event.target.name === 'orderAmount' ) {
       setAmountError('')
     }
-  }
-
-  function onChangeHandlerForFile(event) {
-    setFormInputs({ ...formInputs, [event.target.name]: event.target.files[0] });
-    
-    if (event.target.name === 'invoiceFile' ) {
-      setInvoiceFileError('')
     }
-     
   }
+ 
   return (
     <>
 
@@ -109,7 +107,7 @@ function CreateOrderForm() {
             type="file"
             className="form-control"
             accept="application/pdf"
-            onChange={onChangeHandlerForFile}
+            onChange={onChangeHandler}
             defaultValue={formInputs.invoice}
           />
           {invoiceFileError && <div className="text-danger">{invoiceFileError}</div>}
