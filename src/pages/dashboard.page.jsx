@@ -6,19 +6,25 @@ import OrderTable from '../components/orderTable';
 
 function Dashboard() {
   const [orders, setOrders] = useState([]);
-  const fetchOrders = async () => {
-    try {
-      const response = await getOrders();
-      setOrders(response.data);
-     } catch (error) {
-      toast.error('Failed to fetch orders.');
-      console.error('Error fetching orders:', error);
-    }
-  };
+
   useEffect(() => {
 
+    const fetchOrders = async () => {
+      try {
+        const response = await getOrders();
+        setOrders(response.data);
+      } catch (error) {
+        toast.error('Failed to fetch orders.');
+        console.error('Error fetching orders:', error);
+      }
+    };
     fetchOrders();
   }, []);
+  
+   if (!orders) {
+    return <div>Loading...</div>;
+  }
+ 
 
   return (
     <div className="container mt-4 mb-3">
@@ -26,7 +32,7 @@ function Dashboard() {
         <h2> Dashboard</h2>
         <Link to="/create" className="btn btn-dark">
           + Create Order
-         </Link>
+        </Link>
       </div>
       <OrderTable orders={orders} />
 
