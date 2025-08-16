@@ -10,29 +10,28 @@ function OrderPage() {
   const [order, setOrder] = useState( '');
   const [url, setUrl] = useState('');
 
-  const fetchOrder = async () => {
-    try {
+   useEffect(() => {
+    const fetchOrder = async () => {
+      try {
 
-      // get order by id 
-      const response  = await getOrderById(id);
-      setOrder(response.data);
+        // get order by id 
+        const orderById  = await getOrderById(id);
+        setOrder(orderById.data);
 
-      // get invoice-file by file-id 
-      const binarydata = await getFileById(id);
-   
-      // Create a Blob from the decoded binary data
-      const blob = new Blob([binarydata.data], { type: 'application/pdf' });
+        // get invoice-file by file-id 
+        const binarydata = await getFileById(id);
+     
+        // Create a Blob from the decoded binary data
+        const blob = new Blob([binarydata.data], { type: 'application/pdf' });
 
-      // Create a temporary URL for the Blob
-      setUrl(URL.createObjectURL(blob));
-   
-    } catch (error) {
-      toast.error('Failed to fetch order details.');
-      console.error('Error fetching order details:', error);
-    }
-  };
- 
-  useEffect(() => {
+        // Create a temporary URL for the Blob
+        setUrl(URL.createObjectURL(blob));
+     
+      } catch (error) {
+        toast.error('Failed to fetch order details.');
+        console.error('Error fetching order details:', error);
+      }
+    };
     fetchOrder();
   }, [id]);
 
